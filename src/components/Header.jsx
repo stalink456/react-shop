@@ -6,7 +6,19 @@ function Header({ orders, onDelete }) {
   const [cartOpen, setCartOpen] = useState(false);
 
   const showOrders = (orders) => {
-    return orders.map((element) => <Order onDelete={onDelete} key={element.id} item={element} />);
+    let sum = 0;
+    orders.forEach((element) => {
+      sum += Number(element.price);
+    });
+
+    return (
+      <div>
+        {orders.map((element) => (
+          <Order onDelete={onDelete} key={element.id} item={element} />
+        ))}
+        <p className="sum">Сумма: {sum.toFixed(2)}$</p>
+      </div>
+    );
   };
 
   return (
@@ -24,7 +36,7 @@ function Header({ orders, onDelete }) {
                 showOrders(orders)
               ) : (
                 <div className="empty">
-                  <h2>В корзине отсутствует товар</h2>
+                  <h2 style={{ marginBottom: "20px" }}>Товаров нет</h2>
                 </div>
               )}
             </div>
